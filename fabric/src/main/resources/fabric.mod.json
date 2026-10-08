@@ -20,7 +20,7 @@
           "io.github.jason13official.living_lights.LivingLightsFabric"
         ],
         "client": [
-          "io.github.jason13official.living_lights.client.LivingLightsFabricClient"
+          "io.github.jason13official.living_lights.LivingLightsClientFabric"
         ]
     },
     "accessWidener": "${mod_id}.accesswidener",

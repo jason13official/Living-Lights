@@ -1,10 +1,10 @@
-package io.github.jason13official.living_lights.client;
+package io.github.jason13official.living_lights;
 
 import io.github.jason13official.living_lights.impl.common.lighting.LivingLights;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientEntityEvents;
 
-public class LivingLightsFabricClient implements ClientModInitializer {
+public class LivingLightsClientFabric implements ClientModInitializer {
 
   @Override
   public void onInitializeClient() {

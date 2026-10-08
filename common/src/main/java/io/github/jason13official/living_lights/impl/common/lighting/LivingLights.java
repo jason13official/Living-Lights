@@ -4,6 +4,7 @@ import io.github.jason13official.living_lights.api.common.lighting.EmissionProvi
 import io.github.jason13official.living_lights.api.common.lighting.LightEmission;
 import io.github.jason13official.living_lights.api.common.lighting.LightEmitter;
 import io.github.jason13official.living_lights.api.common.lighting.Source;
+import io.github.jason13official.living_lights.platform.Services;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.core.BlockPos;
@@ -27,14 +28,24 @@ public final class LivingLights {
     return lights == null ? 0 : lights.getEmission(blockNode);
   }
 
-  /// update the light from emitters
+  /// update the light from emitters; servers compute derived light and sync it, clients read the synced value
   public static void tick(Entity entity) {
 
     if (entity instanceof LightEmitter emitter) {
       update(entity, emitter.getLightEmission());
-    } else if (entity instanceof LivingEntity living) {
-      update(entity, getEmission(living));
+      return;
     }
+
+    if (entity.level().isClientSide()) {
+      update(entity, Services.emission().getSyncedEmission(entity));
+      return;
+    }
+
+    int emission = entity instanceof LivingEntity living ? getEmission(living) : 0;
+    if (emission != Services.emission().getSyncedEmission(entity)) {
+      Services.emission().setSyncedEmission(entity, emission);
+    }
+    update(entity, emission);
   }
 
   /// remove emitters `<= 0`, or put new emission level and update the block light engine

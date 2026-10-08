@@ -2,6 +2,7 @@ package io.github.jason13official.living_lights;
 
 import io.github.jason13official.living_lights.impl.common.registry.ModComponents;
 import io.github.jason13official.living_lights.impl.common.lighting.LivingLights;
+import io.github.jason13official.living_lights.impl.common.registry.ModAttachmentsNeoForge;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import net.minecraft.core.Registry;
@@ -15,6 +16,7 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.EntityLeaveLevelEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.neoforged.neoforge.registries.RegisterEvent;
 
 @Mod(Constants.MOD_ID)
@@ -29,6 +31,7 @@ public class LivingLightsNeoForge {
     LivingLightsMod.init();
 
     bind(Registries.DATA_COMPONENT_TYPE, ModComponents::register);
+    bind(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, ModAttachmentsNeoForge::register);
 
     // EntityTickEvent.Post
     NeoForge.EVENT_BUS.addListener(LivingLightsNeoForge::onTick);

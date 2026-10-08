@@ -1,5 +1,6 @@
 package io.github.jason13official.living_lights;
 
+import io.github.jason13official.living_lights.impl.common.registry.ModAttachmentsFabric;
 import io.github.jason13official.living_lights.impl.common.registry.ModComponents;
 import io.github.jason13official.living_lights.impl.common.lighting.LivingLights;
 import java.util.function.BiConsumer;
@@ -19,6 +20,7 @@ public class LivingLightsFabric implements ModInitializer {
     LivingLightsMod.init();
 
     bind(BuiltInRegistries.DATA_COMPONENT_TYPE, ModComponents::register);
+    ModAttachmentsFabric.register();
 
     // ServerEntityEvents.ENTITY_UNLOAD
     ServerEntityEvents.ENTITY_UNLOAD.register((entity, level) -> LivingLights.remove(entity));
