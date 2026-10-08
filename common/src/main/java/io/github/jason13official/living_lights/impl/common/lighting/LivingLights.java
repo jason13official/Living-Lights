@@ -1,12 +1,17 @@
 package io.github.jason13official.living_lights.impl.common.lighting;
 
+import io.github.jason13official.living_lights.api.common.lighting.EmissionProvider;
+import io.github.jason13official.living_lights.api.common.lighting.LightEmission;
 import io.github.jason13official.living_lights.api.common.lighting.LightEmitter;
 import io.github.jason13official.living_lights.api.common.lighting.Source;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 
@@ -79,14 +84,31 @@ public final class LivingLights {
     LEVELS.remove(level);
   }
 
-  /// get light emission from entities that don't directly implement `LightEmitter`
+  /// get light emission from entities that don't directly implement `LightEmitter`; the brightest source wins
   private static int getEmission(LivingEntity entity) {
 
-    // TODO check against tags, data component(s), items or general Predicate
-//    int fromHead = PumpkinHeads.isLit(entity) ? LANTERN_EMISSION : 0;
-//    return Math.max(fromHead, Math.max(PumpkinMaceItem.getLight(entity.getMainHandItem()), PumpkinMaceItem.getLight(entity.getOffhandItem())));
+    if (entity.typeHolder().is(LightEmission.LUMINOUS)) {
+      return LightEmission.MAX;
+    }
 
-    return 15;
+    int emission = 0;
+    for (EmissionProvider provider : LightEmission.providers()) {
+      emission = Math.max(emission, provider.getEmission(entity));
+    }
+    for (EquipmentSlot slot : EquipmentSlot.VALUES) {
+      emission = Math.max(emission, LightEmission.of(entity.getItemBySlot(slot), LightEmission.LUMINOUS_WHEN_EQUIPPED));
+    }
+    if (entity instanceof Player player) {
+      for (ItemStack stack : player.getInventory()) {
+        if (emission >= LightEmission.MAX) {
+          break;
+        }
+        if (stack.is(LightEmission.LUMINOUS_IN_INVENTORY)) {
+          emission = Math.max(emission, LightEmission.of(stack, LightEmission.LUMINOUS_IN_INVENTORY));
+        }
+      }
+    }
+    return Math.min(emission, LightEmission.MAX);
   }
 
   /// update the light engine for chunks/blocks at a given position in a level/dimension
