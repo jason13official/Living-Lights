@@ -13,6 +13,6 @@ public class LivingLightsFabric implements ModInitializer {
 
     // Use Fabric to bootstrap the Common mod.
     Constants.LOG.info("Hello Fabric world!");
-    LivingLights.init();
+    LivingLightsMod.init();
   }
 }
