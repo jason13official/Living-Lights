@@ -55,6 +55,23 @@ public class MyMod {
 }
 ```
 
+### LightEmission.set / clear
+
+Light entities that don't tick, like part entities; call on both client and server, every time the entity moves.
+
+```java
+public class EntityBodyPart {
+  
+  public void customTick() {
+    LightEmission.set(segment, 15);
+  }
+  
+  public void onRemoval() {
+    LightEmission.clear(segment);
+  }
+}
+```
+
 ### Tags
 
 | Tag                                            | Effect                                               |

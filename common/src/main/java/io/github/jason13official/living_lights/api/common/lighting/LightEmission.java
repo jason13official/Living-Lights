@@ -1,6 +1,7 @@
 package io.github.jason13official.living_lights.api.common.lighting;
 
 import io.github.jason13official.living_lights.LivingLightsMod;
+import io.github.jason13official.living_lights.impl.common.lighting.LivingLights;
 import io.github.jason13official.living_lights.impl.common.registry.ModComponents;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -8,6 +9,7 @@ import java.util.function.Predicate;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.BlockItem;
@@ -34,6 +36,18 @@ public final class LightEmission {
   public static DataComponentType<Integer> component() {
 
     return ModComponents.LIGHT_EMISSION;
+  }
+
+  /// light an entity that doesn't tick (e.g. part entities); call on both sides, ticking entities are recomputed every tick
+  public static void set(Entity entity, int emission) {
+
+    LivingLights.update(entity, emission);
+  }
+
+  /// remove light set with `set`
+  public static void clear(Entity entity) {
+
+    LivingLights.remove(entity);
   }
 
   /// add custom logic for any living entity
