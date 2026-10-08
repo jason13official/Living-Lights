@@ -69,6 +69,15 @@ Tagged block items emit their block's light level (torch 14, soul lantern 10); o
 
 `living_lights:light_emission` (0-15) sets an exact light level for one stack while it's equipped, overriding the item tags.
 
+```java
+public class MyMod {
+  
+  private void onAnEvent() {
+    stack.set(LightEmission.component(), 12);
+  }
+}
+```
+
 ```
 /give @s minecraft:blaze_rod[living_lights:light_emission=12]
 ```

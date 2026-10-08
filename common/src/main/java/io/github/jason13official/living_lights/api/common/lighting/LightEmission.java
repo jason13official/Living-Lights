@@ -5,6 +5,7 @@ import io.github.jason13official.living_lights.impl.common.registry.ModComponent
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Predicate;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
@@ -29,6 +30,12 @@ public final class LightEmission {
 
   private static final List<EmissionProvider> PROVIDERS = new CopyOnWriteArrayList<>();
 
+  /// the `living_lights:light_emission` component (0-15); exact light for one stack while equipped, overrides the item tags
+  public static DataComponentType<Integer> component() {
+
+    return ModComponents.LIGHT_EMISSION;
+  }
+
   /// add custom logic for any living entity
   public static void register(EmissionProvider provider) {
 
@@ -52,7 +59,7 @@ public final class LightEmission {
     if (stack.isEmpty()) {
       return 0;
     }
-    Integer component = stack.get(ModComponents.LIGHT_EMISSION);
+    Integer component = stack.get(component());
     if (component != null) {
       return component;
     }
