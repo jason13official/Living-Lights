@@ -1,18 +1,21 @@
 package io.github.jason13official.living_lights;
 
+import io.github.jason13official.living_lights.impl.common.lighting.LivingLights;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLevelEvents;
 
 public class LivingLightsFabric implements ModInitializer {
 
   @Override
   public void onInitialize() {
 
-    // This method is invoked by the Fabric mod loader when it is ready
-    // to load your mod. You can access Fabric and Common code in this
-    // project.
-
-    // Use Fabric to bootstrap the Common mod.
-    Constants.LOG.info("Hello Fabric world!");
     LivingLightsMod.init();
+
+    // ServerEntityEvents.ENTITY_UNLOAD
+    ServerEntityEvents.ENTITY_UNLOAD.register((entity, level) -> LivingLights.remove(entity));
+
+    // ServerLevelEvents.UNLOAD
+    ServerLevelEvents.UNLOAD.register((server, level) -> LivingLights.unload(level));
   }
 }

@@ -8,8 +8,9 @@
         "${mod_author}"
     ],
     "contact": {
-        "homepage": "https://fabricmc.net/",
-        "sources": "https://github.com/FabricMC/fabric-example-mod"
+        "homepage": "https://github.com/jason13official/Living-Lights",
+        "sources": "https://github.com/jason13official/Living-Lights",
+        "issues": "https://github.com/jason13official/Living-Lights/issues"
     },
     "license": "${license}",
     "icon": "${mod_id}.png",
@@ -17,8 +18,12 @@
     "entrypoints": {
         "main": [
           "io.github.jason13official.living_lights.LivingLightsFabric"
+        ],
+        "client": [
+          "io.github.jason13official.living_lights.client.LivingLightsFabricClient"
         ]
     },
+    "accessWidener": "${mod_id}.accesswidener",
     "mixins": [
         "${mod_id}.mixins.json",
         "${mod_id}.fabric.mixins.json"
