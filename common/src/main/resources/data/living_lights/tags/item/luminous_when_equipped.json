@@ -1,20 +1,4 @@
 {
   "values": [
-    "minecraft:torch",
-    "minecraft:soul_torch",
-    "minecraft:copper_torch",
-    "minecraft:redstone_torch",
-    "#minecraft:lanterns",
-    "minecraft:jack_o_lantern",
-    "minecraft:glowstone",
-    "minecraft:sea_lantern",
-    "minecraft:shroomlight",
-    "minecraft:end_rod",
-    "minecraft:campfire",
-    "minecraft:soul_campfire",
-    "minecraft:ochre_froglight",
-    "minecraft:verdant_froglight",
-    "minecraft:pearlescent_froglight",
-    "minecraft:lava_bucket"
   ]
 }
